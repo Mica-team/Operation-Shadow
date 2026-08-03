@@ -27,16 +27,16 @@ public class PlayerSpawnEvent {
 
         CompoundTag playerData = player.getPersistentData();
 
-        // Check persistent data flag
+        // Check if player has already received the mission dossier
         if (!playerData.getBoolean(GIVEN_DOSSIER_KEY)) {
             ItemStack writtenBook = createMissionDossier();
 
-            // Give item or drop on ground if inventory is full
+            // Place book in player inventory, or drop it on the ground if full
             if (!player.getInventory().add(writtenBook)) {
                 player.drop(writtenBook, false);
             }
 
-            // Flag player so they only receive the book on initial login
+            // Save persistent tag to prevent duplicate spawns on future logins
             playerData.putBoolean(GIVEN_DOSSIER_KEY, true);
         }
     }
@@ -45,48 +45,49 @@ public class PlayerSpawnEvent {
         ItemStack book = new ItemStack(Items.WRITTEN_BOOK);
         CompoundTag tag = book.getOrCreateTag();
 
-        // Basic Metadata
-        tag.putString("title", "Operation Shadow");
-        tag.putString("author", "HQ");
-        tag.putInt("generation", 0); // Mark as Original
+        // Metadata
+        tag.putString("title", "Operation Shadow: Target High Command");
+        tag.putString("author", "Handler");
+        tag.putInt("generation", 0); // Original written book
 
         ListTag pages = new ListTag();
 
-        // Page 1
+        // Page 1: Briefing
         pages.add(StringTag.valueOf(Component.Serializer.toJson(Component.literal(
-            "§lOperation Shadow§r\n\n" +
+            "§l§4Operation Shadow§r\n\n" +
             "Mission Dossier - File #001\n\n" +
             "Welcome, Agent.\n\n" +
-            "You have arrived at the Safe House.\n\n" +
-            "Before you leave, complete your preparation. The exit door will remain locked until all objectives are finished."
+            "You have arrived at the Safe House. Your high-value target has been located.\n\n" +
+            "§lTarget:§r Adolf Hitler\n\n" +
+            "Before insertion, complete your setup. The exit door remains sealed until ready."
         ))));
 
-        // Page 2
+        // Page 2: Preparation Objectives
         pages.add(StringTag.valueOf(Component.Serializer.toJson(Component.literal(
             "§lObjectives§r\n\n" +
             "☐ Read this dossier.\n\n" +
             "☐ Search every storage chest in the Safe House.\n\n" +
-            "☐ Collect the required crafting materials.\n\n" +
+            "☐ Collect required crafting materials.\n\n" +
             "☐ Find the Creative Ammo Box."
         ))));
 
-        // Page 3
+        // Page 3: Mission Goal
         pages.add(StringTag.valueOf(Component.Serializer.toJson(Component.literal(
             "☐ Craft a Homemade Shotgun.\n\n" +
             "☐ Make sure you are fully prepared.\n\n" +
             "---\n\n" +
             "§lFinal Objective§r\n\n" +
-            "When all preparation tasks are complete, the Safe House security system will unlock the main door."
+            "Infiltrate the enemy compound and eliminate the target."
         ))));
 
-        // Page 4
+        // Page 4: Outro
         pages.add(StringTag.valueOf(Component.Serializer.toJson(Component.literal(
-            "Proceed to your first mission.\n\n" +
+            "Once prepared, security locks will release.\n\n" +
+            "Leave no witnesses.\n\n" +
             "Good luck, Agent."
         ))));
 
         tag.put("pages", pages);
         return book;
     }
-          }
-                      
+            }
