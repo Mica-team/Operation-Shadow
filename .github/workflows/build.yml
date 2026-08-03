@@ -3,7 +3,7 @@ name: Build Operation Shadow
 on:
   push:
     branches:
-      - main
+      - forge-1.20.1
   pull_request:
   workflow_dispatch:
 
