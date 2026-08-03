@@ -1,0 +1,37 @@
+modLoader="javafml"
+loaderVersion="[47,)"
+license="Apache-2.0"
+
+[[mods]]
+modId="operationshadow"
+version="${file.jarVersion}"
+displayName="Operation Shadow"
+displayURL="https://github.com/Gamerofpro/OperationShadow"
+logoFile="logo.png"
+credits="Thanks to the Minecraft Forge team."
+authors="Gamerofpro"
+description='''
+Operation Shadow is a story-driven Minecraft mod featuring missions, military-themed structures, custom enemies, equipment, and cinematic gameplay.
+It is made especially for hitman series for gamerofpro
+'''
+
+[[dependencies.operationshadow]]
+modId="forge"
+mandatory=true
+versionRange="[47,)"
+ordering="NONE"
+side="BOTH"
+
+[[dependencies.operationshadow]]
+modId="minecraft"
+mandatory=true
+versionRange="[1.20.1,1.20.2)"
+ordering="NONE"
+side="BOTH"
+
+[[dependencies.operationshadow]]
+modId="superbwarfare"
+mandatory=true
+versionRange="[0,)"
+ordering="AFTER"
+side="BOTH"
