@@ -4,7 +4,7 @@ license="Apache-2.0"
 
 [[mods]]
 modId="operationshadow"
-version="${file.jarVersion}"
+version="${mod_version}"
 displayName="Operation Shadow"
 displayURL="https://github.com/Gamerofpro/OperationShadow"
 logoFile="logo.png"
