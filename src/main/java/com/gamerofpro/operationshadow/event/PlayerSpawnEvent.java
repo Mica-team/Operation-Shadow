@@ -20,23 +20,19 @@ public class PlayerSpawnEvent {
     public static void onPlayerLoggedIn(PlayerEvent.PlayerLoggedInEvent event) {
         Player player = event.getEntity();
 
-        // Ensure this only runs on the logical server
         if (player.level().isClientSide()) {
             return;
         }
 
         CompoundTag playerData = player.getPersistentData();
 
-        // Check if player has already received the mission dossier
         if (!playerData.getBoolean(GIVEN_DOSSIER_KEY)) {
             ItemStack writtenBook = createMissionDossier();
 
-            // Place book in player inventory, or drop it on the ground if full
             if (!player.getInventory().add(writtenBook)) {
                 player.drop(writtenBook, false);
             }
 
-            // Save persistent tag to prevent duplicate spawns on future logins
             playerData.putBoolean(GIVEN_DOSSIER_KEY, true);
         }
     }
@@ -45,49 +41,49 @@ public class PlayerSpawnEvent {
         ItemStack book = new ItemStack(Items.WRITTEN_BOOK);
         CompoundTag tag = book.getOrCreateTag();
 
-        // Metadata
-        tag.putString("title", "Operation Shadow: Target High Command");
-        tag.putString("author", "Handler");
-        tag.putInt("generation", 0); // Original written book
+        tag.putString("title", "Operation Shadow");
+        tag.putString("author", "Operation Shadow Command");
+        tag.putInt("generation", 0);
 
         ListTag pages = new ListTag();
 
-        // Page 1: Briefing
+        // Page 1
         pages.add(StringTag.valueOf(Component.Serializer.toJson(Component.literal(
-            "§l§4Operation Shadow§r\n\n" +
-            "Mission Dossier - File #001\n\n" +
-            "Welcome, Agent.\n\n" +
-            "You have arrived at the Safe House. Your high-value target has been located.\n\n" +
-            "§lTarget:§r Adolf Hitler\n\n" +
-            "Before insertion, complete your setup. The exit door remains sealed until ready."
+                "§l§4OPERATION SHADOW§r\n\n" +
+                "MISSION BRIEF\n\n" +
+                "Welcome, Soldier.\n\n" +
+                "You have been deployed to the combat zone.\n\n" +
+                "Your objective is to establish a forward position, secure the area, and prepare for upcoming operations."
         ))));
 
-        // Page 2: Preparation Objectives
+        // Page 2
         pages.add(StringTag.valueOf(Component.Serializer.toJson(Component.literal(
-            "§lObjectives§r\n\n" +
-            "☐ Read this dossier.\n\n" +
-            "☐ Search every storage chest in the Safe House.\n\n" +
-            "☐ Collect required crafting materials.\n\n" +
-            "☐ Find the Creative Ammo Box."
+                "§lPRIMARY OBJECTIVES§r\n\n" +
+                "☐ Gather essential supplies.\n\n" +
+                "☐ Find weapons and ammunition.\n\n" +
+                "☐ Capture enemy positions.\n\n" +
+                "☐ Raise your unit's flag.\n\n" +
+                "☐ Eliminate hostile forces."
         ))));
 
-        // Page 3: Mission Goal
+        // Page 3
         pages.add(StringTag.valueOf(Component.Serializer.toJson(Component.literal(
-            "☐ Craft a Homemade Shotgun.\n\n" +
-            "☐ Make sure you are fully prepared.\n\n" +
-            "---\n\n" +
-            "§lFinal Objective§r\n\n" +
-            "Infiltrate the enemy compound and eliminate the target."
+                "§lFIELD INTELLIGENCE§r\n\n" +
+                "Control of territory is critical.\n\n" +
+                "Captured locations provide strategic advantages.\n\n" +
+                "Protect your teammates and hold your captured objectives against enemy attacks."
         ))));
 
-        // Page 4: Outro
+        // Page 4
         pages.add(StringTag.valueOf(Component.Serializer.toJson(Component.literal(
-            "Once prepared, security locks will release.\n\n" +
-            "Leave no witnesses.\n\n" +
-            "Good luck, Agent."
+                "§lFINAL ORDERS§r\n\n" +
+                "Victory belongs to the side that controls the battlefield.\n\n" +
+                "Fight with honor.\n\n" +
+                "Complete your mission.\n\n" +
+                "§7— Operation Shadow Command"
         ))));
 
         tag.put("pages", pages);
         return book;
     }
-            }
+}
