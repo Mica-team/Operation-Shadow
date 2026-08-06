@@ -1,7 +1,5 @@
 {
   "variants": {
-    "": {
-      "model": "operationshadow:block/flag_base"
-    }
+    "": { "model": "operationshadow:block/sky_flag" }
   }
 }
