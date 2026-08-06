@@ -1,0 +1,7 @@
+{
+  "parent": "operationshadow:block/flag_base",
+  "textures": {
+    "1": "operationshadow:block/sky_flag",
+    "particle": "operationshadow:block/sky_flag"
+  }
+}
